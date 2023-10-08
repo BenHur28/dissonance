@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import NavAction from "./nav-action";
 import { Separator } from "../ui/separator";
 import { ScrollArea } from "../ui/scroll-area";
+import Navitem from "./nav-item";
 
 const Navsidebar = async () => {
 	const profile = await currentProfile();
@@ -27,7 +28,13 @@ const Navsidebar = async () => {
 			<Separator className="h-[2px] bg-zine-300 dark:bg-zinc-700 rounded-md w-10 mx-auto" />
 			<ScrollArea className="flex-1 w-full">
 				{servers.map((server) => (
-					<div key={server.id} className="mb-4"></div>
+					<div key={server.id} className="mb-4">
+						<Navitem
+							id={server.id}
+							name={server.name}
+							imageUrl={server.imageUrl}
+						/>
+					</div>
 				))}
 			</ScrollArea>
 		</div>
