@@ -9,7 +9,7 @@ import { ModalProvider } from "@/components/providers/modal-provider";
 const font = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Dissonance Chat App",
+	title: "Dissonance | Your Place to Talk and Hang out",
 	description: "Dissonance Chat App",
 };
 
