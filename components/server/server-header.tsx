@@ -2,9 +2,11 @@
 
 import { ServerWithMembersWithProfiles } from "@/types";
 import { MemberRole } from "@prisma/client";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, UserPlus } from "lucide-react";
 import {
 	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
@@ -27,6 +29,14 @@ const ServerHeader = ({ server, role }: ServerHeaderProps) => {
 					<ChevronDown className="h-5 w-5 ml-auto" />
 				</button>
 			</DropdownMenuTrigger>
+			<DropdownMenuContent className="w-56 text-xs font-medium text-black dark:text-neurtal-400 space-y-[2px]">
+				{isModerator && (
+					<DropdownMenuItem className="text-indigo-600 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer">
+						Invite People
+						<UserPlus className="h-4 w-4 ml-auto" />
+					</DropdownMenuItem>
+				)}
+			</DropdownMenuContent>
 		</DropdownMenu>
 	);
 };
