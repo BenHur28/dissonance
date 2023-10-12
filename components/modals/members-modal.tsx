@@ -3,33 +3,30 @@
 import {
 	Dialog,
 	DialogContent,
+	DialogDescription,
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
 
 import { useModal } from "@/hooks/use-modal-store";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { Check, Copy, RefreshCw } from "lucide-react";
-import { useState } from "react";
-import axios from "axios";
+import { ServerWithMembersWithProfiles } from "@/types";
 
 const MembersModal = () => {
 	const { onOpen, isOpen, onClose, type, data } = useModal();
 
 	const isModalOpen = isOpen && type === "members";
-	const { server } = data;
+	const { server } = data as { server: ServerWithMembersWithProfiles };
 
 	return (
 		<Dialog open={isModalOpen} onOpenChange={onClose}>
 			<DialogContent className="bg-white text-black p-0 overflow-hidden">
 				<DialogHeader className="pt-8 px-6">
-					<DialogTitle className="text-center text-2xl font-bold">
-						Invite Friends
-					</DialogTitle>
+					<DialogTitle className="text-center text-2xl font-bold"></DialogTitle>
 				</DialogHeader>
-				<div className="p-6">Hello Members List</div>
+				<DialogDescription className="text-center text-zinc-500">
+					{server?.members?.length} members
+				</DialogDescription>
+				<div className="p-6">Hello Members</div>
 			</DialogContent>
 		</Dialog>
 	);
