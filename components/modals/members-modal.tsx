@@ -13,6 +13,7 @@ import { ServerWithMembersWithProfiles } from "@/types";
 import { ScrollArea } from "../ui/scroll-area";
 import UserAvatar from "../user-avatar";
 import { ShieldAlert, ShieldCheck } from "lucide-react";
+import { useState } from "react";
 
 const roleIconMap = {
 	GUEST: null,
@@ -22,6 +23,7 @@ const roleIconMap = {
 
 const MembersModal = () => {
 	const { onOpen, isOpen, onClose, type, data } = useModal();
+	const [loadingId, setLoadingId] = useState("");
 
 	const isModalOpen = isOpen && type === "members";
 	const { server } = data as { server: ServerWithMembersWithProfiles };
@@ -48,6 +50,10 @@ const MembersModal = () => {
 								</div>
 								<p className="text-xs text-zine-500">{member.profile.email}</p>
 							</div>
+							{server.profileId !== member.profileId &&
+								loadingId !== member.id && (
+									<div className="ml-auto">Actions!</div>
+								)}
 						</div>
 					))}
 				</ScrollArea>
