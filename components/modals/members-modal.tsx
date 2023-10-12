@@ -155,7 +155,7 @@ const MembersModal = () => {
 													</DropdownMenuPortal>
 												</DropdownMenuSub>
 												<DropdownMenuSeparator />
-												<DropdownMenuItem>
+												<DropdownMenuItem onClick={() => onKick(member.id)}>
 													<Gavel className="h-4 w-4 mr-2" />
 													Kick
 												</DropdownMenuItem>
