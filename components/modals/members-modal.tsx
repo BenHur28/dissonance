@@ -11,6 +11,7 @@ import {
 import { useModal } from "@/hooks/use-modal-store";
 import { ServerWithMembersWithProfiles } from "@/types";
 import { ScrollArea } from "../ui/scroll-area";
+import UserAvatar from "../user-avatar";
 
 const MembersModal = () => {
 	const { onOpen, isOpen, onClose, type, data } = useModal();
@@ -34,7 +35,9 @@ const MembersModal = () => {
 						<div
 							key={member.id}
 							className="flex flex-items-center gap-x-2 mb-6"
-						></div>
+						>
+							<UserAvatar src={member.profile.imageUrl} />
+						</div>
 					))}
 				</ScrollArea>
 			</DialogContent>
