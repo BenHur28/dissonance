@@ -16,7 +16,7 @@ import { useOrigin } from "@/hooks/use-origin";
 import { useState } from "react";
 import axios from "axios";
 
-const InviteModal = () => {
+const MembersModal = () => {
 	const { onOpen, isOpen, onClose, type, data } = useModal();
 	const origin = useOrigin();
 
@@ -93,4 +93,4 @@ const InviteModal = () => {
 	);
 };
 
-export default InviteModal;
+export default MembersModal;
