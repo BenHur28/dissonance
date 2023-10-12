@@ -26,6 +26,8 @@ import { ScrollArea } from "../ui/scroll-area";
 import UserAvatar from "../user-avatar";
 import {
 	Check,
+	Gavel,
+	Loader2,
 	MoreVertical,
 	Shield,
 	ShieldAlert,
@@ -91,13 +93,28 @@ const MembersModal = () => {
 																	<Check className="h-4 w-4 ml-auto" />
 																)}
 															</DropdownMenuItem>
+															<DropdownMenuItem>
+																<Shield className="h-4 w-4 mr-2" />
+																Moderator
+																{member.role === "MODERATOR" && (
+																	<ShieldCheck className="h-4 w-4 ml-auto" />
+																)}
+															</DropdownMenuItem>
 														</DropdownMenuSubContent>
 													</DropdownMenuPortal>
 												</DropdownMenuSub>
+												<DropdownMenuSeparator />
+												<DropdownMenuItem>
+													<Gavel className="h-4 w-4 mr-2" />
+													Kick
+												</DropdownMenuItem>
 											</DropdownMenuContent>
 										</DropdownMenu>
 									</div>
 								)}
+							{loadingId === member.id && (
+								<Loader2 className="animate-spin text-zinc-500 ml-auto w-4 h-4" />
+							)}
 						</div>
 					))}
 				</ScrollArea>
