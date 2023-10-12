@@ -46,6 +46,7 @@ const MembersModal = () => {
 									{member.profile.name}
 									{roleIconMap[member.role]}
 								</div>
+								<p className="text-xs text-zine-500">{member.profile.email}</p>
 							</div>
 						</div>
 					))}
