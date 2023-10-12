@@ -10,6 +10,7 @@ import {
 
 import { useModal } from "@/hooks/use-modal-store";
 import { ServerWithMembersWithProfiles } from "@/types";
+import { ScrollArea } from "../ui/scroll-area";
 
 const MembersModal = () => {
 	const { onOpen, isOpen, onClose, type, data } = useModal();
@@ -21,12 +22,21 @@ const MembersModal = () => {
 		<Dialog open={isModalOpen} onOpenChange={onClose}>
 			<DialogContent className="bg-white text-black p-0 overflow-hidden">
 				<DialogHeader className="pt-8 px-6">
-					<DialogTitle className="text-center text-2xl font-bold"></DialogTitle>
+					<DialogTitle className="text-center text-2xl font-bold">
+						Manage Members
+					</DialogTitle>
+					<DialogDescription className="text-center text-zinc-500">
+						{server?.members?.length} members
+					</DialogDescription>
 				</DialogHeader>
-				<DialogDescription className="text-center text-zinc-500">
-					{server?.members?.length} members
-				</DialogDescription>
-				<div className="p-6">Hello Members</div>
+				<ScrollArea className="mt-8 max-h-[420px] pr-6">
+					{server?.members?.map((member) => (
+						<div
+							key={member.id}
+							className="flex flex-items-center gap-x-2 mb-6"
+						></div>
+					))}
+				</ScrollArea>
 			</DialogContent>
 		</Dialog>
 	);
