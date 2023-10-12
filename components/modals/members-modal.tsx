@@ -35,6 +35,10 @@ import {
 	ShieldQuestion,
 } from "lucide-react";
 import { useState } from "react";
+import { MemberRole } from "@prisma/client";
+import qs from "query-string";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const roleIconMap = {
 	GUEST: null,
@@ -43,11 +47,32 @@ const roleIconMap = {
 };
 
 const MembersModal = () => {
+	const router = useRouter();
 	const { onOpen, isOpen, onClose, type, data } = useModal();
 	const [loadingId, setLoadingId] = useState("");
 
 	const isModalOpen = isOpen && type === "members";
 	const { server } = data as { server: ServerWithMembersWithProfiles };
+
+	const onRoleChange = async (memberId: string, role: MemberRole) => {
+		try {
+			setLoadingId(memberId);
+			const url = qs.stringify({
+				url: `/api/members/${memberId}`,
+				query: {
+					serverId: server?.id,
+					memberId: memberId,
+				},
+			});
+			const response = await axios.patch(url, { role });
+			router.refresh();
+			onOpen("members", { server: response.data });
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setLoadingId("");
+		}
+	};
 
 	return (
 		<Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -86,14 +111,20 @@ const MembersModal = () => {
 													</DropdownMenuSubTrigger>
 													<DropdownMenuPortal>
 														<DropdownMenuSubContent>
-															<DropdownMenuItem>
+															<DropdownMenuItem
+																onClick={() => onRoleChange(member.id, "GUEST")}
+															>
 																<Shield className="h-4 w-4 mr-2" />
 																Guest
 																{member.role === "GUEST" && (
 																	<Check className="h-4 w-4 ml-auto" />
 																)}
 															</DropdownMenuItem>
-															<DropdownMenuItem>
+															<DropdownMenuItem
+																onClick={() =>
+																	onRoleChange(member.id, "MODERATOR")
+																}
+															>
 																<Shield className="h-4 w-4 mr-2" />
 																Moderator
 																{member.role === "MODERATOR" && (
