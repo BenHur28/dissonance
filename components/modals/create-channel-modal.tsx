@@ -122,9 +122,26 @@ const CreateChannelModal = () => {
 											defaultValue={field.value}
 										>
 											<FormControl>
-												<SelectTrigger></SelectTrigger>
+												<SelectTrigger
+													className="bg-zinc-300/50 border-0 focus:ring-0 
+												text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none"
+												>
+													<SelectValue placeholder="Select a channel type" />
+												</SelectTrigger>
 											</FormControl>
+											<SelectContent>
+												{Object.values(ChannelType).map((type) => (
+													<SelectItem
+														key={type}
+														value={type}
+														className="captialize"
+													>
+														{type.toLowerCase()}
+													</SelectItem>
+												))}
+											</SelectContent>
 										</Select>
+										<FormMessage />
 									</FormItem>
 								)}
 							/>
