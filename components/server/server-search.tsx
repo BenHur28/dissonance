@@ -1,6 +1,13 @@
 "use client";
 
 import { Search } from "lucide-react";
+import { useState } from "react";
+import {
+	CommandDialog,
+	CommandEmpty,
+	CommandInput,
+	CommandList,
+} from "../ui/command";
 
 type ServerSearchProps = {
 	data: {
@@ -17,9 +24,12 @@ type ServerSearchProps = {
 };
 
 const ServerSearch = ({ data }: ServerSearchProps) => {
+	const [open, setOpen] = useState(false);
+
 	return (
 		<>
 			<button
+				onClick={() => setOpen(true)}
 				className="group px-2 py-2 rounded-md flex items-center gap-x-2 w-full hover:bg-zinc-700/10
                             dark:hover:bg-zinc-700/50 transition"
 			>
@@ -37,6 +47,12 @@ const ServerSearch = ({ data }: ServerSearchProps) => {
 					<span className="text-xs">CRTL + K</span>
 				</kbd>
 			</button>
+			<CommandDialog open={open} onOpenChange={setOpen}>
+				<CommandInput placeholder="Search all channels and members" />
+				<CommandList>
+					<CommandEmpty>No Results Found</CommandEmpty>
+				</CommandList>
+			</CommandDialog>
 		</>
 	);
 };
