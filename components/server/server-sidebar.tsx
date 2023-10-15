@@ -6,6 +6,7 @@ import ServerHeader from "./server-header";
 import { ScrollArea } from "../ui/scroll-area";
 import ServerSearch from "./server-search";
 import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
+import { text } from "stream/consumers";
 
 type ServerSidebarProps = {
 	serverId: string;
@@ -78,7 +79,46 @@ const ServerSideBar = async ({ serverId }: ServerSidebarProps) => {
 			<ServerHeader server={server} role={role} />
 			<ScrollArea className="flex-1 px-3">
 				<div className="mt-2">
-					<ServerSearch />
+					<ServerSearch
+						data={[
+							{
+								label: "Text Channels",
+								type: "channel",
+								data: textChannels?.map((channel) => ({
+									id: channel.id,
+									name: channel.name,
+									icon: iconMap[channel.type],
+								})),
+							},
+							{
+								label: "Voice Channels",
+								type: "channel",
+								data: audioChannels?.map((channel) => ({
+									id: channel.id,
+									name: channel.name,
+									icon: iconMap[channel.type],
+								})),
+							},
+							{
+								label: "Video Channels",
+								type: "channel",
+								data: videoChannels?.map((channel) => ({
+									id: channel.id,
+									name: channel.name,
+									icon: iconMap[channel.type],
+								})),
+							},
+							{
+								label: "Members",
+								type: "member",
+								data: members?.map((member) => ({
+									id: member.id,
+									name: member.profile.name,
+									icon: roleIconMap[member.role],
+								})),
+							},
+						]}
+					/>
 				</div>
 			</ScrollArea>
 		</div>
