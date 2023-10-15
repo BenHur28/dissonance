@@ -6,7 +6,6 @@ import ServerHeader from "./server-header";
 import { ScrollArea } from "../ui/scroll-area";
 import ServerSearch from "./server-search";
 import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
-import { text } from "stream/consumers";
 
 type ServerSidebarProps = {
 	serverId: string;
@@ -23,7 +22,7 @@ const roleIconMap = {
 	[MemberRole.MODERATOR]: (
 		<ShieldCheck className="h-4 w-4 mr-2 text-indigo-500" />
 	),
-	[MemberRole.ADMIN]: <ShieldAlert className="h-4 w-4 mr-2 text-indigo-500" />,
+	[MemberRole.ADMIN]: <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />,
 };
 
 const ServerSideBar = async ({ serverId }: ServerSidebarProps) => {
