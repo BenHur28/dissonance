@@ -129,7 +129,10 @@ const ServerSideBar = async ({ serverId }: ServerSidebarProps) => {
 							channelType={ChannelType.TEXT}
 							role={role}
 							label="Text Channels"
-						></ServerSection>
+						/>
+						{textChannels.map((channel) => (
+
+						))}
 					</div>
 				)}
 			</ScrollArea>
