@@ -54,7 +54,6 @@ const EditChannelModal = () => {
 	const { isOpen, onClose, type, data } = useModal();
 	const { channel, server } = data;
 	const isModalOpen = isOpen && type === "editChannel";
-	const params = useParams();
 
 	const router = useRouter();
 	const form = useForm({
@@ -82,7 +81,7 @@ const EditChannelModal = () => {
 					serverId: server?.id,
 				},
 			});
-			await axios.post(url, values);
+			await axios.patch(url, values);
 			form.reset();
 			router.refresh();
 			onClose();
