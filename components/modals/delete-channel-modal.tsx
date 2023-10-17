@@ -9,27 +9,35 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 
+import qs from "query-string";
 import { useModal } from "@/hooks/use-modal-store";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 const DeleteChannelModal = () => {
 	const { isOpen, onClose, type, data } = useModal();
 	const isModalOpen = isOpen && type === "deleteChannel";
-	const { server } = data;
+	const { server, channel } = data;
 	const router = useRouter();
+	const params = useParams();
 
 	const [isLoading, setIsLoading] = useState(false);
 
 	const onClick = async () => {
 		try {
 			setIsLoading(true);
-			await axios.delete(`/api/servers/${server?.id}`);
+			const url = qs.stringifyUrl({
+				url: `/api/channels/${channel?.id}`,
+				query: {
+					serverId: params?.serverId,
+				},
+			});
+			await axios.delete(url);
 			onClose();
 			router.refresh();
-			router.push("/");
+			router.push(`/servers/${params?.serverId}`);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -42,12 +50,12 @@ const DeleteChannelModal = () => {
 			<DialogContent className="bg-white text-black p-0 overflow-hidden">
 				<DialogHeader className="pt-8 px-6">
 					<DialogTitle className="text-center text-2xl font-bold">
-						Delete Server
+						Delete Channel
 					</DialogTitle>
 					<DialogDescription className="text-center text-zinc-500">
-						Are you sure you want to delete this server?{" "}
+						Are you sure you want to delete this channel?{" "}
 						<span className="font-semibold text-indigo-500">
-							{server?.name}{" "}
+							{channel?.name}{" "}
 						</span>
 						will be permanently deleted.
 					</DialogDescription>
