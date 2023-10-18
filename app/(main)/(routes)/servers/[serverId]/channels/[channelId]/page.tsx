@@ -1,5 +1,5 @@
 const ChannelIdPage = () => {
-	return <div>page</div>;
+	return <div>Specific channel page</div>;
 };
 
 export default ChannelIdPage;
