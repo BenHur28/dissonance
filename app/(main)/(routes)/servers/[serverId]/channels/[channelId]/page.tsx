@@ -1,3 +1,7 @@
+import { currentProfile } from "@/lib/current-profile";
+import { db } from "@/lib/db";
+import { redirectToSignIn } from "@clerk/nextjs";
+
 type ChannelIdPageProps = {
 	params: {
 		serverId: string;
@@ -5,7 +9,26 @@ type ChannelIdPageProps = {
 	};
 };
 
-const ChannelIdPage = ({ params }: ChannelIdPageProps) => {
+const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
+	const profile = await currentProfile();
+
+	if (!profile) {
+		return redirectToSignIn();
+	}
+
+	const channel = await db.channel.findUnique({
+		where: {
+			id: params.channelId,
+		},
+	});
+
+	const member = await db.channel.findFirst({
+		where: {
+			serverId: params.serverId,
+			profileId: profile.id,
+		},
+	});
+
 	return <div>Specific channel page</div>;
 };
 
