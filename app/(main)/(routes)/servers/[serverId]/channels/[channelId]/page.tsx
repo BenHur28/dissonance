@@ -1,4 +1,11 @@
-const ChannelIdPage = () => {
+type ChannelIdPageProps = {
+	params: {
+		serverId: string;
+		channelId: string;
+	};
+};
+
+const ChannelIdPage = ({ params }: ChannelIdPageProps) => {
 	return <div>Specific channel page</div>;
 };
 
