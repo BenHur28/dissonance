@@ -1,6 +1,7 @@
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 type ChannelIdPageProps = {
 	params: {
@@ -29,7 +30,15 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
 		},
 	});
 
-	return <div>Specific channel page</div>;
+	if (!channel || !member) {
+		redirect("/");
+	}
+
+	return (
+		<div className="bg-white dark:bg-[#313338] flex flex-col h-full">
+			Specific channel page
+		</div>
+	);
 };
 
 export default ChannelIdPage;
