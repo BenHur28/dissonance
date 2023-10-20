@@ -99,8 +99,13 @@ model Message {
   member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
   channelId String
-  channl Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
 
-  
+  deleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([channelId])
+  @@index([memberId])
 
 }
