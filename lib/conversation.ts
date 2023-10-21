@@ -19,3 +19,13 @@ const findConversation = async (memberOneId: string, memberTwoId: string) => {
 		},
 	});
 };
+
+const createNewConversation = async (
+	memberOneId: string,
+	memberTwoId: string
+) => {
+	try {
+	} catch (error) {
+		console.log(error);
+	}
+};
