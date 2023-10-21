@@ -25,6 +25,24 @@ const createNewConversation = async (
 	memberTwoId: string
 ) => {
 	try {
+		return await db.conversation.create({
+			data: {
+				memberOneId: memberOneId,
+				memberTwoId: memberTwoId,
+			},
+			include: {
+				memberOne: {
+					include: {
+						profile: true,
+					},
+				},
+				memberTwo: {
+					include: {
+						profile: true,
+					},
+				},
+			},
+		});
 	} catch (error) {
 		console.log(error);
 	}
