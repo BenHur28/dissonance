@@ -1,3 +1,4 @@
+import ChatHeader from "@/components/chat/chat-header";
 import { getOrCreateConversation } from "@/lib/conversation";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -44,7 +45,16 @@ const MemberIdPage = async ({ params }: MemberIdPageProps) => {
 	const otherMember =
 		memberOne.profileId === profile.id ? memberTwo : memberOne;
 
-	return <div>Specific Member Page</div>;
+	return (
+		<div className="bg-white dark:bg-[#313338] flex flex-col h-full">
+			<ChatHeader
+				imageUrl={otherMember.profile.imageUrl}
+				name={otherMember.profile.name}
+				serverId={params.serverId}
+				type="conversation"
+			/>
+		</div>
+	);
 };
 
 export default MemberIdPage;
