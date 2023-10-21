@@ -1,3 +1,7 @@
+import { currentProfile } from "@/lib/current-profile";
+import { db } from "@/lib/db";
+import { redirectToSignIn } from "@clerk/nextjs";
+
 type MemberIdPageProps = {
 	params: {
 		memberId: string;
@@ -5,7 +9,26 @@ type MemberIdPageProps = {
 	};
 };
 
-const MemberIdPage = ({ params }: MemberIdPageProps) => {
+const MemberIdPage = async ({ params }: MemberIdPageProps) => {
+	const profile = await currentProfile();
+	if (!profile) {
+		return redirectToSignIn();
+	}
+
+	const currentMember = await db.member.findFirst({
+		where: {
+			serverId: params.serverId,
+			profileId: profile.id,
+		},
+		include: {
+			profile: true,
+		},
+	});
+
+	if (!currentMember) {
+		return redirectToSignIn();
+	}
+
 	return <div>Specific Member Page</div>;
 };
 
