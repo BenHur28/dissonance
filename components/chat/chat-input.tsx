@@ -5,7 +5,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Plus } from "lucide-react";
+import { Plus, Smile } from "lucide-react";
 
 type ChatInputProps = {
 	apiUrl: string;
@@ -57,6 +57,9 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                                     border-none border-0 text-zinc-600 dark:text-zinc-200
                                     focus-visible:ring-0 focus-visible:ring-offset-0"
 									/>
+									<div className="absolute top-7 right-8">
+										<Smile />
+									</div>
 								</div>
 							</FormControl>
 						</FormItem>
