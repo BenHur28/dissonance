@@ -1,6 +1,8 @@
 "use client";
 
+import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type ChatInputProps = {
 	apiUrl: string;
@@ -14,6 +16,19 @@ const formSchema = z.object({
 });
 
 const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			content: "",
+		},
+	});
+
+	const isLoading = form.formState.isSubmitting;
+
+	const onSubmit = async (value: z.infer<typeof formSchema>) => {
+		console.log(value);
+	};
+
 	return <div>ChatInput</div>;
 };
 
