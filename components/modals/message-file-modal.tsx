@@ -59,7 +59,7 @@ const MessageFileModal = () => {
 			await axios.post(url, { ...values, content: values.fileUrl });
 			form.reset();
 			router.refresh();
-			onClose();
+			handleClose();
 		} catch (error) {
 			console.log(error);
 		}
