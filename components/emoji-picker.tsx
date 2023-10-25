@@ -1,6 +1,10 @@
 "use client";
 
-const EmojiPicker = () => {
+type EmojiPickerProps = {
+	onChange: (value: string) => void;
+};
+
+const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
 	return <div></div>;
 };
 
