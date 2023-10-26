@@ -25,7 +25,11 @@ const ChatMessages = ({
 	paramValue,
 	type,
 }: ChatMessagesProps) => {
-	return <div></div>;
+	return (
+		<div className="flex-1 flex flex-col py-4 overflow-y-auto">
+			<div className="flex-1" />
+		</div>
+	);
 };
 
 export default ChatMessages;
