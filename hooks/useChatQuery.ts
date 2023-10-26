@@ -1,13 +1,7 @@
 import qs from "query-string";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSocket } from "@/components/providers/socket.provider";
-
-type ChatQueryProps = {
-	queryKey: string;
-	apiUrl: string;
-	paramKey: "channelId" | "conversationId";
-	paramValue: string;
-};
+import { ChatQueryProps } from "./use-chat-query";
 
 export const useChatQuery = ({
 	queryKey,
