@@ -14,8 +14,18 @@ type ChatMessagesProps = {
 	type: "channel" | "conversation";
 };
 
-const ChatMessages = () => {
-	return <div>ChatMessages</div>;
+const ChatMessages = ({
+	name,
+	member,
+	chatId,
+	apiUrl,
+	socketUrl,
+	socketQuery,
+	paramKey,
+	paramValue,
+	type,
+}: ChatMessagesProps) => {
+	return <div></div>;
 };
 
 export default ChatMessages;

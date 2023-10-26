@@ -5,15 +5,9 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { ChannelIdPageProps } from "./page";
 
-type ChannelIdPageProps = {
-	params: {
-		serverId: string;
-		channelId: string;
-	};
-};
-
-const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
+export const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
 	const profile = await currentProfile();
 
 	if (!profile) {
@@ -26,14 +20,15 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
 		},
 	});
 
-	const member = await db.member.findFirst({
-		where: {
-			serverId: params.serverId,
-			profileId: profile.id,
-		},
-	});
-
-	if (!channel || !member) {
+	if (
+		!channel ||
+		!(await db.channel.findFirst({
+			where: {
+				serverId: params.serverId,
+				profileId: profile.id,
+			},
+		}))
+	) {
 		redirect("/");
 	}
 
@@ -46,7 +41,12 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
 			/>
 			<ChatMessages
 				name={channel.name}
-				member={member}
+				member={await db.channel.findFirst({
+					where: {
+						serverId: params.serverId,
+						profileId: profile.id,
+					},
+				})}
 				chatId={channel.id}
 				type="channel"
 				apiUrl="/api/messages"
@@ -64,5 +64,3 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
 		</div>
 	);
 };
-
-export default ChannelIdPage;
