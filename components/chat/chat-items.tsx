@@ -53,6 +53,20 @@ const ChatItem = ({
 	socketUrl,
 	socketQuery,
 }: ChatItemProps) => {
+	const [isEditing, setIsEditing] = useState(false);
+	const [isDeleting, setIsDeleting] = useState(false);
+
+	useEffect(() => {
+		const handleKeyDown = (event: any) => {
+			if (event.key == "Escape" || event.keyCode == 27) {
+				setIsEditing(false);
+			}
+		};
+		window.addEventListener("keydown", handleKeyDown);
+
+		return () => window.removeEventListener("keyDown", handleKeyDown);
+	}, []);
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -60,7 +74,7 @@ const ChatItem = ({
 		},
 	});
 
-	const onSubmit = (values) => {
+	const onSubmit = (values: any) => {
 		console.log(values);
 	};
 
@@ -69,9 +83,6 @@ const ChatItem = ({
 			content: content,
 		});
 	}, [form, content]);
-
-	const [isEditing, setIsEditing] = useState(false);
-	const [isDeleting, setIsDeleting] = useState(false);
 
 	const fileType = fileUrl?.split(".").pop();
 	const isAdmin = currentMember.role === MemberRole.ADMIN;
@@ -169,8 +180,14 @@ const ChatItem = ({
 											</FormControl>
 										</FormItem>
 									)}
-								></FormField>
+								/>
+								<Button size="sm" variant="primary">
+									Save
+								</Button>
 							</form>
+							<span className="text-[10px] mt-1 text-zinc-400">
+								Press escape to cancel, enter to save
+							</span>
 						</Form>
 					)}
 				</div>
