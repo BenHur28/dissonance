@@ -3,6 +3,7 @@
 import { Member, Profile } from "@prisma/client";
 import UserAvatar from "../user-avatar";
 import { ActionTooltip } from "../action-tooltip";
+import { ShieldAlert, ShieldCheck } from "lucide-react";
 
 type ChatItemProps = {
 	id: string;
@@ -17,6 +18,12 @@ type ChatItemProps = {
 	isUpdated: boolean;
 	socketUrl: string;
 	socketQuery: Record<string, string>;
+};
+
+const roleIconMap = {
+	GUEST: null,
+	MODERATOR: <ShieldCheck className="w-4 h-4 ml-2 text-indigo-500" />,
+	ADMIN: <ShieldAlert className="w-4 h-4 ml-2 text-rose-500" />,
 };
 
 const ChatItem = ({
@@ -44,10 +51,14 @@ const ChatItem = ({
 								{member.profile.name}
 							</p>
 							<ActionTooltip label={member.role}>
-								<p>Role</p>
+								{roleIconMap[member.role]}
 							</ActionTooltip>
 						</div>
+						<span className="text-xs text-zinc-500 dark:text-zinc-400">
+							{timestamp}
+						</span>
 					</div>
+					{content}
 				</div>
 			</div>
 		</div>
