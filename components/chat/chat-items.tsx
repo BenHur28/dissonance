@@ -3,7 +3,7 @@
 import { Member, MemberRole, Profile } from "@prisma/client";
 import UserAvatar from "../user-avatar";
 import { ActionTooltip } from "../action-tooltip";
-import { ShieldAlert, ShieldCheck } from "lucide-react";
+import { FileIcon, ShieldAlert, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 type ChatItemProps = {
@@ -82,6 +82,19 @@ const ChatItem = ({
 								className="object-cover"
 							/>
 						</a>
+					)}
+					{isPDF && (
+						<div className="relative flex items-center p-2 mt-2 rounded-md bg-background/10">
+							<FileIcon className="h-10 w-10 fill-indigo-200 stroke-indigo-400" />
+							<a
+								href={fileUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="ml-2 text-sm text-indigo-500 dark:text-indigo-400 hover:underline"
+							>
+								PDF File
+							</a>
+						</div>
 					)}
 				</div>
 			</div>
