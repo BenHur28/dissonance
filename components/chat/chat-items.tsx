@@ -13,6 +13,8 @@ import qs from "query-string";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 type ChatItemProps = {
 	id: string;
@@ -57,6 +59,10 @@ const ChatItem = ({
 			content: content,
 		},
 	});
+
+	const onSubmit = (values) => {
+		console.log(values);
+	};
 
 	useEffect(() => {
 		form.reset({
@@ -139,6 +145,33 @@ const ChatItem = ({
 								</span>
 							)}
 						</p>
+					)}
+					{!fileUrl && isEditing && (
+						<Form {...form}>
+							<form
+								onSubmit={form.handleSubmit(onSubmit)}
+								className="flex items-center w-full gap-x-2 pt-2"
+							>
+								<FormField
+									control={form.control}
+									name="content"
+									render={({ field }) => (
+										<FormItem className="flex-1">
+											<FormControl>
+												<div className="relative w-full">
+													<Input
+														className="p-2 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 
+                                                    focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
+														placeholder="Edited message"
+														{...field}
+													/>
+												</div>
+											</FormControl>
+										</FormItem>
+									)}
+								></FormField>
+							</form>
+						</Form>
 					)}
 				</div>
 			</div>
