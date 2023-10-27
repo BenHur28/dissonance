@@ -5,8 +5,14 @@ import UserAvatar from "../user-avatar";
 import { ActionTooltip } from "../action-tooltip";
 import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import * as z from "zod";
+import axios from "axios";
+import qs from "query-string";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 
 type ChatItemProps = {
 	id: string;
@@ -29,6 +35,10 @@ const roleIconMap = {
 	ADMIN: <ShieldAlert className="w-4 h-4 ml-2 text-rose-500" />,
 };
 
+const formSchema = z.object({
+	content: z.string().min(1),
+});
+
 const ChatItem = ({
 	id,
 	content,
@@ -41,6 +51,19 @@ const ChatItem = ({
 	socketUrl,
 	socketQuery,
 }: ChatItemProps) => {
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			content: content,
+		},
+	});
+
+	useEffect(() => {
+		form.reset({
+			content: content,
+		});
+	}, [form, content]);
+
 	const [isEditing, setIsEditing] = useState(false);
 	const [isDeleting, setIsDeleting] = useState(false);
 
@@ -123,7 +146,10 @@ const ChatItem = ({
 				<div className="hidden group-hover:flex items-center gap-x-2 absolute p-1 -top-2 right-5 bg-white dark:bg-zinc-800 border rounded-sm">
 					{canEditMessage && (
 						<ActionTooltip label="Edit">
-							<Edit className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition" />
+							<Edit
+								onClick={() => setIsEditing(true)}
+								className="cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
+							/>
 						</ActionTooltip>
 					)}
 					<ActionTooltip label="Delete">
