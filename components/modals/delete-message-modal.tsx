@@ -14,13 +14,11 @@ import { useModal } from "@/hooks/use-modal-store";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
 const DeleteMessageModal = () => {
 	const { isOpen, onClose, type, data } = useModal();
 	const isModalOpen = isOpen && type === "deleteMessage";
-	const { server, channel } = data;
-	const router = useRouter();
+	const { apiUrl, query } = data;
 
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -28,15 +26,11 @@ const DeleteMessageModal = () => {
 		try {
 			setIsLoading(true);
 			const url = qs.stringifyUrl({
-				url: `/api/channels/${channel?.id}`,
-				query: {
-					serverId: server?.id,
-				},
+				url: apiUrl || "",
+				query: query,
 			});
 			await axios.delete(url);
 			onClose();
-			router.refresh();
-			router.push(`/servers/${server?.id}`);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -49,13 +43,11 @@ const DeleteMessageModal = () => {
 			<DialogContent className="bg-white text-black p-0 overflow-hidden">
 				<DialogHeader className="pt-8 px-6">
 					<DialogTitle className="text-center text-2xl font-bold">
-						Delete Channel
+						Delete Message
 					</DialogTitle>
 					<DialogDescription className="text-center text-zinc-500">
-						Are you sure you want to delete this channel?{" "}
-						<span className="font-semibold text-indigo-500">
-							{channel?.name}{" "}
-						</span>
+						Are you sure you want to delete this message?
+						<br />
 						will be permanently deleted.
 					</DialogDescription>
 				</DialogHeader>
