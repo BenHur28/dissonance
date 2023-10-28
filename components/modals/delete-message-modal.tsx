@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 
 const DeleteMessageModal = () => {
 	const { isOpen, onClose, type, data } = useModal();
-	const isModalOpen = isOpen && type === "deleteChannel";
+	const isModalOpen = isOpen && type === "deleteMessage";
 	const { server, channel } = data;
 	const router = useRouter();
 
