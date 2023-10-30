@@ -4,7 +4,7 @@ import { Member, Message, Profile } from "@prisma/client";
 import ChatWelcome from "./chat-welcome";
 import { useChatQuery } from "@/hooks/use-chat-query";
 import { Loader2, ServerCrash } from "lucide-react";
-import { Fragment } from "react";
+import { Fragment, useRef, ElementRef } from "react";
 import { format } from "date-fns";
 import ChatItem from "./chat-items";
 import { useChatSocket } from "@/hooks/use-chat-socket";
@@ -44,6 +44,9 @@ const ChatMessages = ({
 	const addKey = `chat:${chatId}:messages`;
 	const updateKey = `chat:${chatId}:messages:update`;
 
+	const chatRef = useRef<ElementRef<"div">>(null);
+	const bottomRef = useRef<ElementRef<"div">>(null);
+
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
 		useChatQuery({ queryKey, apiUrl, paramKey, paramValue });
 
@@ -72,7 +75,7 @@ const ChatMessages = ({
 	}
 
 	return (
-		<div className="flex-1 flex flex-col py-4 overflow-y-auto">
+		<div ref={chatRef} className="flex-1 flex flex-col py-4 overflow-y-auto">
 			<div className="flex-1" />
 			<ChatWelcome type={type} name={name} />
 			<div className="flex flex-col-reverse mt-auto">
@@ -96,6 +99,7 @@ const ChatMessages = ({
 					</Fragment>
 				))}
 			</div>
+			<div ref={bottomRef} />
 		</div>
 	);
 };
