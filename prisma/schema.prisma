@@ -135,7 +135,7 @@ model Conversation {
 
 model DirectMessage {
   id String @id @default(uuid())
-  const String @db.Text
+  content String @db.Text
   fielUrl String? @db.Text
 
   memberId String
